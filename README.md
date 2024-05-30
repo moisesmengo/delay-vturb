@@ -4,18 +4,25 @@
 
 1. Vá até o vídeo que deseja configurar e clique em **EDITAR**.
 
-   ![Texto alternativo](https://raw.githubusercontent.com/moisesmengo/imagens_lrj/7f7350324a787faafed6b304a2ac110561deb7dd/assets/img/1estrelas.svg)
+   ![Texto alternativo](https://github.com/moisesmengo/delay-vturb/blob/main/1.PNG?raw=true)
 
 ## Passo 2: Configurar Botão de Ação
 
 1. Na barra lateral, procure e clique na opção **BOTÃO DE AÇÃO**.
-2. Clique no botão **ADICIONAR NOVO BOTÃO**.
-3. Configure apenas o tempo de início e marque a opção **continuar exibindo após término do vídeo**. Não é necessário configurar texto, tamanho e link.
-4. Salve as alterações.
+
+![Texto alternativo](https://github.com/moisesmengo/delay-vturb/blob/main/2.PNG?raw=true)
+
+3. Clique no botão **ADICIONAR NOVO BOTÃO**.
+4. Configure apenas o tempo de início e marque a opção **continuar exibindo após término do vídeo**. Não é necessário configurar texto, tamanho e link.
+5. Salve as alterações.
+
+![Texto alternativo](https://github.com/moisesmengo/delay-vturb/blob/main/3.PNG?raw=true)
 
 ## Passo 3: Obter Código Embed
 
 1. Clique em **Embed** e copie o código do vídeo.
+
+![Texto alternativo](https://github.com/moisesmengo/delay-vturb/blob/main/4.PNG?raw=true)
 
 ## Passo 4: Inserir Código Embed no HTML
 
