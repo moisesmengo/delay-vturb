@@ -4,6 +4,8 @@
 
 1. Vá até o vídeo que deseja configurar e clique em **EDITAR**.
 
+   ![Texto alternativo](https://raw.githubusercontent.com/moisesmengo/imagens_lrj/7f7350324a787faafed6b304a2ac110561deb7dd/assets/img/1estrelas.svg)
+
 ## Passo 2: Configurar Botão de Ação
 
 1. Na barra lateral, procure e clique na opção **BOTÃO DE AÇÃO**.
