@@ -84,64 +84,64 @@
 1. Cole o script a seguir no final do `body` de sua página:
 
     ```html
-    <script> 
-      document.addEventListener("DOMContentLoaded", function () { 
-        // Função para mostrar todas as seções ocultas 
-        function showHiddenSections() { 
-          console.log("Exibindo as seções ocultas"); 
-          const hiddenSections = document.querySelectorAll("[data-delay]"); 
-          hiddenSections.forEach((section) => { 
-            section.style.display = "block"; 
-          }); 
-        }
-
-        // Função para observar mudanças na classe e estilo de um elemento 
-        function observeClassAndStyleChanges(element) { 
-          const observer = new MutationObserver((mutations) => { 
-            mutations.forEach((mutation) => { 
-              if ( 
-                mutation.attributeName === "class" || 
-                mutation.attributeName === "style" 
-              ) { 
-                const display = window.getComputedStyle(element).display; 
-                const isHidden = element.classList.contains("smartplayer-hide"); 
-                console.log( 
-                  `Mudança detectada: display = ${display}, isHidden = ${isHidden}` 
-                ); 
-                if (display !== "none" && !isHidden) { 
-                  showHiddenSections(); 
-                  observer.disconnect(); // Parar de observar após exibir as seções 
-                } 
-              } 
-            }); 
-          });
-
-          observer.observe(element, { attributes: true }); 
-        }
-
-        // Função para encontrar e observar o contêiner do botão 
-        function findAndObserveButtonContainer() { 
-          const delayButtonContainer = document.querySelector( 
-            '[id^="callaction_"][class*="smartplayer-call-action"]' 
-          ); 
-          if (delayButtonContainer) { 
-            console.log("Contêiner do botão encontrado"); 
-            observeClassAndStyleChanges(delayButtonContainer); 
-            clearInterval(findButtonInterval); // Parar de verificar após encontrar o contêiner 
-          } else { 
-            console.log( 
-              "Contêiner do botão não encontrado, tentando novamente..." 
-            ); 
-          } 
-        }
-
-        // Verificar a presença do contêiner do botão a cada 500ms 
-        const findButtonInterval = setInterval( 
-          findAndObserveButtonContainer, 
-          500 
-        ); 
+  <script> 
+  document.addEventListener("DOMContentLoaded", function () { 
+    // Função para mostrar todas as seções ocultas 
+    function showHiddenSections() { 
+      console.log("Exibindo as seções ocultas"); 
+      const hiddenSections = document.querySelectorAll("[data-delay]"); 
+      hiddenSections.forEach((section) => { 
+        section.style.display = "block"; 
       }); 
-    </script>
+    }
+
+    // Função para observar mudanças na classe e estilo de um elemento 
+    function observeClassAndStyleChanges(element) { 
+      const observer = new MutationObserver((mutations) => { 
+        mutations.forEach((mutation) => { 
+          if ( 
+            mutation.attributeName === "class" || 
+            mutation.attributeName === "style" 
+          ) { 
+            const display = window.getComputedStyle(element).display; 
+            const isHidden = element.classList.contains("smartplayer-hide"); 
+            console.log( 
+              `Mudança detectada: display = ${display}, isHidden = ${isHidden}` 
+            ); 
+            if (display !== "none" && !isHidden) { 
+              showHiddenSections(); 
+              observer.disconnect(); // Parar de observar após exibir as seções 
+            } 
+          } 
+        }); 
+      });
+
+      observer.observe(element, { attributes: true }); 
+    }
+
+    // Função para encontrar e observar o contêiner do botão 
+    function findAndObserveButtonContainer() { 
+      const delayButtonContainer = document.querySelector( 
+        '[id^="callaction_"][class*="smartplayer-call-action"]' 
+      ); 
+      if (delayButtonContainer) { 
+        console.log("Contêiner do botão encontrado"); 
+        observeClassAndStyleChanges(delayButtonContainer); 
+        clearInterval(findButtonInterval); // Parar de verificar após encontrar o contêiner 
+      } else { 
+        console.log( 
+          "Contêiner do botão não encontrado, tentando novamente..." 
+        ); 
+      } 
+    }
+
+    // Verificar a presença do contêiner do botão a cada 500ms 
+    const findButtonInterval = setInterval( 
+      findAndObserveButtonContainer, 
+      500 
+    ); 
+  }); 
+</script>
     ```
 
 ## Passo 7: Adicionar Código de Estilo
