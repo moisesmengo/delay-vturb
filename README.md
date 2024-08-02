@@ -84,18 +84,21 @@
 1. Cole o script a seguir no final do `body` de sua página:
 
     ```html
-  <script> 
+    <script> 
   document.addEventListener("DOMContentLoaded", function () { 
-    // Função para mostrar todas as seções ocultas 
+    const HAS_SHOWN_KEY = 'hasShownSections'; // Chave para o localStorage
+
+    // FunÃ§Ã£o para mostrar todas as seÃ§Ãµes ocultas 
     function showHiddenSections() { 
-      console.log("Exibindo as seções ocultas"); 
+      console.log("Exibindo as seÃ§Ãµes ocultas"); 
       const hiddenSections = document.querySelectorAll("[data-delay]"); 
       hiddenSections.forEach((section) => { 
         section.style.display = "block"; 
-      }); 
+      });
+      localStorage.setItem(HAS_SHOWN_KEY, 'true'); // Marcar que as seÃ§Ãµes foram mostradas
     }
 
-    // Função para observar mudanças na classe e estilo de um elemento 
+    // FunÃ§Ã£o para observar mudanÃ§as na classe e estilo de um elemento 
     function observeClassAndStyleChanges(element) { 
       const observer = new MutationObserver((mutations) => { 
         mutations.forEach((mutation) => { 
@@ -106,11 +109,11 @@
             const display = window.getComputedStyle(element).display; 
             const isHidden = element.classList.contains("smartplayer-hide"); 
             console.log( 
-              `Mudança detectada: display = ${display}, isHidden = ${isHidden}` 
+              `MudanÃ§a detectada: display = ${display}, isHidden = ${isHidden}` 
             ); 
             if (display !== "none" && !isHidden) { 
               showHiddenSections(); 
-              observer.disconnect(); // Parar de observar após exibir as seções 
+              observer.disconnect(); // Parar de observar apÃ³s exibir as seÃ§Ãµes 
             } 
           } 
         }); 
@@ -119,27 +122,30 @@
       observer.observe(element, { attributes: true }); 
     }
 
-    // Função para encontrar e observar o contêiner do botão 
+    // FunÃ§Ã£o para encontrar e observar o contÃªiner do botÃ£o 
     function findAndObserveButtonContainer() { 
       const delayButtonContainer = document.querySelector( 
         '[id^="callaction_"][class*="smartplayer-call-action"]' 
       ); 
       if (delayButtonContainer) { 
-        console.log("Contêiner do botão encontrado"); 
+        console.log("ContÃªiner do botÃ£o encontrado"); 
         observeClassAndStyleChanges(delayButtonContainer); 
-        clearInterval(findButtonInterval); // Parar de verificar após encontrar o contêiner 
+        clearInterval(findButtonInterval); // Parar de verificar apÃ³s encontrar o contÃªiner 
       } else { 
         console.log( 
-          "Contêiner do botão não encontrado, tentando novamente..." 
+          "ContÃªiner do botÃ£o nÃ£o encontrado, tentando novamente..." 
         ); 
       } 
     }
 
-    // Verificar a presença do contêiner do botão a cada 500ms 
-    const findButtonInterval = setInterval( 
-      findAndObserveButtonContainer, 
-      500 
-    ); 
+    // Verificar a presenÃ§a do contÃªiner do botÃ£o a cada 500ms 
+    const findButtonInterval = setInterval(findAndObserveButtonContainer, 500);
+
+    // Verificar se o conteÃºdo jÃ¡ foi mostrado anteriormente
+    const hasShownSections = localStorage.getItem(HAS_SHOWN_KEY) === 'true';
+    if (hasShownSections) {
+      showHiddenSections();
+    }
   }); 
 </script>
     ```
