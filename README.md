@@ -83,7 +83,7 @@
 
 1. Cole o script a seguir no final do `body` de sua página:
 
-    ```html
+```html
     <script> 
   document.addEventListener("DOMContentLoaded", function () { 
     const HAS_SHOWN_KEY = 'hasShownSections'; // Chave para o localStorage
@@ -148,7 +148,7 @@
     }
   }); 
 </script>
-    ```
+```
 
 ## Passo 7: Adicionar Código de Estilo
 
