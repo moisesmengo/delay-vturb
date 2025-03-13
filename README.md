@@ -84,70 +84,72 @@
 1. Cole o script a seguir no final do `body` de sua página:
 
 ```html
-    <script> 
-  document.addEventListener("DOMContentLoaded", function () { 
-    const HAS_SHOWN_KEY = 'hasShownSections'; // Chave para o localStorage
+   document.addEventListener("DOMContentLoaded", function () {
+        const HAS_SHOWN_KEY = "hasShownSections"; // Chave para o localStorage
 
-    // FunÃ§Ã£o para mostrar todas as seÃ§Ãµes ocultas 
-    function showHiddenSections() { 
-      console.log("Exibindo as seÃ§Ãµes ocultas"); 
-      const hiddenSections = document.querySelectorAll("[data-delay]"); 
-      hiddenSections.forEach((section) => { 
-        section.style.display = "block"; 
+        // FunÃ§Ã£o para mostrar todas as seÃ§Ãµes ocultas
+        function showHiddenSections() {
+          console.log("Exibindo as seÃ§Ãµes ocultas");
+          const hiddenSections = document.querySelectorAll("[data-delay]");
+          hiddenSections.forEach((section) => {
+            section.style.display = "block";
+          });
+        }
+
+        // FunÃ§Ã£o para observar mudanÃ§as na classe e estilo de um elemento
+        function observeClassAndStyleChanges(element) {
+          const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+              if (
+                mutation.attributeName === "class" ||
+                mutation.attributeName === "style"
+              ) {
+                const display = window.getComputedStyle(element).display;
+                const isHidden = element.classList.contains("smartplayer-hide");
+                console.log(
+                  `MudanÃ§a detectada: display = ${display}, isHidden = ${isHidden}`
+                );
+                document.querySelector("[data-delay]").style.display = "block";
+                localStorage.setItem(HAS_SHOWN_KEY, "true"); // Marcar que as seÃ§Ãµes foram mostradas
+                if (display !== "none" && !isHidden) {
+                  showHiddenSections();
+                  observer.disconnect(); // Parar de observar apÃ³s exibir as seÃ§Ãµes
+                }
+              }
+            });
+          });
+
+          observer.observe(element, { attributes: true });
+        }
+
+        // FunÃ§Ã£o para encontrar e observar o contÃªiner do botÃ£o
+        function findAndObserveButtonContainer() {
+          const delayButtonContainer = document.querySelector(
+            '[id^="callaction_"][class*="smartplayer-call-action"]'
+          );
+          if (delayButtonContainer) {
+            console.log("ContÃªiner do botÃ£o encontrado");
+            observeClassAndStyleChanges(delayButtonContainer);
+            clearInterval(findButtonInterval); // Parar de verificar apÃ³s encontrar o contÃªiner
+          } else {
+            console.log(
+              "ContÃªiner do botÃ£o nÃ£o encontrado, tentando novamente..."
+            );
+          }
+        }
+
+        // Verificar a presenÃ§a do contÃªiner do botÃ£o a cada 500ms
+        const findButtonInterval = setInterval(
+          findAndObserveButtonContainer,
+          500
+        );
+
+        // Verificar se o conteÃºdo jÃ¡ foi mostrado anteriormente
+        const hasShownSections = localStorage.getItem(HAS_SHOWN_KEY) === "true";
+        if (hasShownSections) {
+          showHiddenSections();
+        }
       });
-      localStorage.setItem(HAS_SHOWN_KEY, 'true'); // Marcar que as seÃ§Ãµes foram mostradas
-    }
-
-    // FunÃ§Ã£o para observar mudanÃ§as na classe e estilo de um elemento 
-    function observeClassAndStyleChanges(element) { 
-      const observer = new MutationObserver((mutations) => { 
-        mutations.forEach((mutation) => { 
-          if ( 
-            mutation.attributeName === "class" || 
-            mutation.attributeName === "style" 
-          ) { 
-            const display = window.getComputedStyle(element).display; 
-            const isHidden = element.classList.contains("smartplayer-hide"); 
-            console.log( 
-              `MudanÃ§a detectada: display = ${display}, isHidden = ${isHidden}` 
-            ); 
-            if (display !== "none" && !isHidden) { 
-              showHiddenSections(); 
-              observer.disconnect(); // Parar de observar apÃ³s exibir as seÃ§Ãµes 
-            } 
-          } 
-        }); 
-      });
-
-      observer.observe(element, { attributes: true }); 
-    }
-
-    // FunÃ§Ã£o para encontrar e observar o contÃªiner do botÃ£o 
-    function findAndObserveButtonContainer() { 
-      const delayButtonContainer = document.querySelector( 
-        '[id^="callaction_"][class*="smartplayer-call-action"]' 
-      ); 
-      if (delayButtonContainer) { 
-        console.log("ContÃªiner do botÃ£o encontrado"); 
-        observeClassAndStyleChanges(delayButtonContainer); 
-        clearInterval(findButtonInterval); // Parar de verificar apÃ³s encontrar o contÃªiner 
-      } else { 
-        console.log( 
-          "ContÃªiner do botÃ£o nÃ£o encontrado, tentando novamente..." 
-        ); 
-      } 
-    }
-
-    // Verificar a presenÃ§a do contÃªiner do botÃ£o a cada 500ms 
-    const findButtonInterval = setInterval(findAndObserveButtonContainer, 500);
-
-    // Verificar se o conteÃºdo jÃ¡ foi mostrado anteriormente
-    const hasShownSections = localStorage.getItem(HAS_SHOWN_KEY) === 'true';
-    if (hasShownSections) {
-      showHiddenSections();
-    }
-  }); 
-</script>
 ```
 
 ## Passo 7: Adicionar Código de Estilo
